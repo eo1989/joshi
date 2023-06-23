@@ -35,8 +35,8 @@ class Param:
     DEFAULT_MONTE_CARLO_NUM_STEPS = 50
     DEFAULT_MONTE_CARLO_NUM_PATHS = 100
 
-    def enum(**enums):
-        return type("Enum", (), enums)
+    def enum(self):
+        return type("Enum", (), self)
 
     OptionType = enum(CALL="call", PUT="put")
     OptionExerciseType = enum(EUROPEAN="european", AMERICAN="american")
@@ -102,7 +102,7 @@ class Param:
         print("---------------------------------------------")
 
     def args(self):
-        args = {
+        return {
             "spot0": self.spot0,
             "strike": self.strike,
             "vol": self.vol,
@@ -110,7 +110,6 @@ class Param:
             "delta": self.delta,
             "T": self.T,
         }
-        return args
 
 
 class Option:
@@ -159,14 +158,13 @@ class BlackScholes(Param):
             return exp(-self.r * self.T) * norm.cdf(-self.d2())
 
     def get_greeks(self):
-        the_greeks = {
+        return {
             "delta": self._delta(),
             "gamma": self._gamma(),
             "theta": self._theta(),
             "vega": self._vega(),
             "rho": self._rho(),
         }
-        return the_greeks
 
     def _delta(self):
         if self.opt_type == "put":
@@ -370,8 +368,7 @@ class Numerical(Param):
             self.exer_type,
         ).vanilla_price()
         simulated_price = np.array([self.value() for self.M in steps])
-        error = abs(simulated_price - exact)
-        return error
+        return abs(simulated_price - exact)
 
 
 class Binomial(Param):

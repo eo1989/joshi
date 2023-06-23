@@ -243,7 +243,6 @@ class TestVanillaBlackScholes(unittest.TestCase):
         )
         # self.assertAlmostEqual( option.vanilla_price(), option.digital_price() )
         print("test: PASS")
-        pass
 
     def test_digital_put_call_partiy(self):
         """
