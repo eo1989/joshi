@@ -11,8 +11,7 @@ def _parser():
     parser = argparse.ArgumentParser(description="options")
 
     parser.add_argument("-s", dest="spot0", type=float, help="spot price")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 kwargs = vars(_parser())
